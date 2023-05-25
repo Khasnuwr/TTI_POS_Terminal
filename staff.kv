@@ -1,0 +1,264 @@
+<SubmitSuccessPopup>:
+    id: success_popup
+    size_hint: 0.3, 0.2
+    auto_dismiss: False
+    title: 'Invoice Recorded Successfully!'
+    Button:
+        text: "OK"
+        size_hint_y: None
+        height: 30
+        size_hint_x: 0.08
+        on_press: success_popup.dismiss()
+        background_normal: ''
+        background_color: (0.06,0.4,0.4, 1)
+<StaffWindow>:
+    id: main_window
+    orientation: "vertical"
+    canvas.before:
+        Color:
+            rgba: (1,1,1, 1)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    BoxLayout:
+        id: header
+        size_hint_y: None
+        height: 40
+        canvas.before:
+            Color:
+                rgba: (0.06,0.45,0.15, 1)
+            Rectangle:
+                size: self.size
+                pos: self.pos
+
+        Label:
+            text: "TTI POS"
+            size_hint_x: 0.9
+            bold: True
+            color: (1,1,1, 1)
+        Label:
+            id: loggedin_user
+            text: "AnonymousUser"
+            color: (1,1,1, 1)
+
+    BoxLayout:
+        id: staff_menu
+        size_hint_y: None
+        height: 30
+        canvas.before:
+            Color:
+                rgba: (1,1,1, 1)
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        Button:
+            text: "Create Invoice+"
+            background_normal: ''
+            background_color: (1.0/255.0, 1.0/99.0, 1.0/71.0, 1)
+            on_release: root.create_invoice()
+            size_hint_x: 0.33
+        Button:
+            text: "Invoices"
+            background_normal: ''
+            on_release: root.invoices_window()
+            background_color: (0.06,0.32,0.32, 1)
+            size_hint_x: 0.33
+
+    BoxLayout:
+        padding: 10
+        BoxLayout:
+            id: product_details
+            orientation: "vertical"
+            size_hint_x: 0.8
+            spacing: 5
+
+            BoxLayout:
+                id: product_labels
+                size_hint_y: None
+                height: 30
+                canvas.before:
+                    Color:
+                        rgba: (0.06,0.45,0.45, 1)
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+                Label:
+                    text: "Product"
+                    size_hint_x: 0.12
+                Label:
+                    text: "Qty"
+                    size_hint_x: 0.02
+                Label:
+                    text: "Price"
+                    size_hint_x: 0.04
+                Label:
+                    text: "Disc(%)"
+                    size_hint_x: 0.02
+                Label:
+                    text: "VAT(%)"
+                    size_hint_x: 0.02
+                Label:
+                    text: "Service Charge"
+                    size_hint_x: 0.04
+                Label:
+                    text: "Stock"
+                    size_hint_x: 0.02
+
+            BoxLayout:
+                id: product_inputs
+                size_hint_y: None
+                height: 30
+                Spinner:
+                    id: id_input
+                    size_hint_x: 0.12
+                    text: "Select Product"
+                    values: root.get_product_list()
+                    on_text: root.update_purchases()
+                TextInput:
+                    id: qty_input
+                    size_hint_x: 0.02
+                    multiline: False
+                TextInput:
+                    id: price_input
+                    size_hint_x: 0.04
+                    multiline: False
+                TextInput:
+                    id: discount
+                    size_hint_x: 0.02
+                    text: "0.00"
+                    multiline: False
+                TextInput:
+                    id: vat
+                    size_hint_x: 0.02
+                    text: "0.00"
+                    multiline: False
+                TextInput:
+                    id: serv_charge
+                    size_hint_x: 0.04
+                    text: "0.00"
+                    multiline: False
+
+                TextInput:
+                    id: stock_remaining
+                    size_hint_x: 0.02
+                    multiline: False
+                    readonly: True
+            BoxLayout:
+                id: add_to_cart
+                orientation: "vertical"
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    spacing: 5
+                    canvas.before:
+                        Color:
+                            rgba: (0.06,0.45,0.45, 1)
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+                    Label:
+                        text: "Product ID"
+                        size_hint_x: 0.2
+                    Label:
+                        text: "Product Name"
+                        size_hint_x: 0.2
+                    Label:
+                        text: "Dimension"
+                        size_hint_x: 0.2
+                    Label:
+                        text: "Qty"
+                        size_hint_x: 0.1
+                    Label:
+                        text: "Price"
+                        size_hint_x: 0.1
+                ScrollView:
+                    StackLayout:
+                        size_hint: 1, None
+                        height: 3000
+                        GridLayout:
+                            id: products
+                            cols: 1
+            BoxLayout:
+                id: invoice_p1
+                size_hint_y: None
+                height: 30
+                TextInput:
+                    id: invoice_number
+                    size_hint_x: 0.08
+                    multiline: False
+                    hint_text: "Invoice Number"
+                TextInput:
+                    id: delivery_number
+                    size_hint_x: 0.08
+                    multiline: False
+                    hint_text: "Delivery Number"
+                TextInput:
+                    id: delivery_date
+                    size_hint_x: 0.08
+                    multiline: False
+                    hint_text: "Delivery(YYYY-MM-DD)"
+                TextInput:
+                    id: sold_to
+                    size_hint_x: 0.08
+                    multiline: False
+                    hint_text: "Name"
+            BoxLayout:
+                id: invoice_p2
+                size_hint_y: None
+                height: 30
+
+                TextInput:
+                    id: contact_number
+                    size_hint_x: 0.08
+                    multiline: False
+                    hint_text: "Contact"
+                TextInput:
+                    id: address
+                    size_hint_x: 0.08
+                    multiline: False
+                    hint_text: "Address"
+                TextInput:
+                    id: payment_method
+                    size_hint_x: 0.08
+                    multiline: False
+                    hint_text: "Payment Method"
+                Button:
+                    id: submit
+                    text: "Submit"
+                    size_hint_x: 0.08
+                    on_release: root.new_invoice()
+                    background_normal: ''
+                    background_color: (0.06,0.4,0.4, 1)
+        BoxLayout:
+            id: preview
+            orientation: "vertical"
+            size_hint_x: 0.2
+            TextInput:
+                id: receipt_preview
+                readonly: True
+            TextInput:
+                id: total_preview
+                readonly: True
+                size_hint_y: None
+                height: 30
+                multiline: False
+            Button:
+                id: clearall
+                text: "Clear"
+                size_hint_y: None
+                height: 30
+                on_release: root.clear_fields()
+                background_normal: ''
+                background_color: (219.0/255.0, 0/255.0, 11.0/255.0, 1)
+    BoxLayout:
+        id: footer
+        size_hint_y: None
+        height: 30
+        canvas.before:
+            Color:
+                rgba: (0.06,0.47,0.47, 1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        Label:
+            text: "Maintained by Arif"

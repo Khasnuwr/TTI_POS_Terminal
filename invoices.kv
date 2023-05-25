@@ -1,0 +1,191 @@
+<UpdateInvoiceSuccessPopup>:
+    id: success_popup
+    size_hint: 0.3, 0.2
+    auto_dismiss: False
+    title: 'Invoice Updated Successfully!'
+    Button:
+        text: "OK"
+        size_hint_y: None
+        height: 30
+        size_hint_x: 0.08
+        on_press: success_popup.dismiss()
+        background_normal: ''
+        background_color: (0.06,0.4,0.4, 1)
+
+
+<InvoiceWindow>:
+    id: invoice_window
+    orientation: "vertical"
+    canvas.before:
+        Color:
+            rgba: (1,1,1, 1)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    BoxLayout:
+        id: invoice_header
+        size_hint_y: None
+        height: 40
+        canvas.before:
+            Color:
+                rgba: (0.06,0.45,0.15, 1)
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        Label:
+            text: "TTI POS"
+            size_hint_x: 0.9
+            bold: True
+            color: (1,1,1, 1)
+        Label:
+            id: loggedin_user
+            text: "AnonymousUser"
+            color: (1,1,1, 1)
+    BoxLayout:
+        id: invoices_menu
+        size_hint_y: None
+        height: 30
+        canvas.before:
+            Color:
+                rgba: (1,1,1, 1)
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        Button:
+            text: "Create Invoice+"
+            background_normal: ''
+            background_color: (0.06,0.32,0.32, 1)
+            on_release: root.create_invoice()
+            size_hint_x: 0.33
+        Button:
+            text: "Invoices"
+            background_normal: ''
+            on_release: root.invoices_window()
+            background_color: (1.0/255.0, 1.0/99.0, 1.0/71.0, 1)
+            size_hint_x: 0.33
+    BoxLayout:
+        id: invoices
+        padding: 10
+        orientation: "vertical"
+        BoxLayout:
+            id: invoice_labels
+            size_hint_y: None
+            height: 40
+            canvas.before:
+                Color:
+                    rgba: (0.06,0.45,0.45, 1)
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+            Label:
+                text: "Invoice Number"
+                size_hint_x: 0.08
+            Label:
+                text: "Invoice Date"
+                size_hint_x: 0.08
+            Label:
+                text: "Delivery Number"
+                size_hint_x: 0.08
+            Label:
+                text: "Sold To"
+                size_hint_x: 0.08
+            Label:
+                text: "Amount"
+                size_hint_x: 0.08
+            Label:
+                text: "Delivery Status"
+                size_hint_x: 0.08
+            Label:
+                text: ""
+                size_hint_x: 0.04
+        ScrollView:
+            StackLayout:
+                size_hint: 1, None
+                width: self.minimum_width
+                height: 20000
+                GridLayout:
+                    id: invoice
+                    cols: 1
+    BoxLayout:
+        id: invoices
+        padding: 10
+        orientation: "vertical"
+        BoxLayout:
+            id: update
+            orientation: "horizontal"
+            size_hint_y: None
+            height: 30
+            TextInput:
+                id: invoice_number
+                multiline: False
+                hint_text: "Invoice Number"
+                on_text_validate: root.search_invoice()
+                size_hint_x: 0.20
+            Button:
+                id: search_invoice
+                text: "Search"
+                on_release: root.search_invoice()
+                size_hint_x: 0.08
+                background_normal: ''
+                background_color: (0.06,0.32,0.32, 1)
+        ScrollView:
+            StackLayout:
+                size_hint: 1, None
+                
+                height: 400
+                GridLayout:
+                    id: ind_invoice0
+                    cols: 1
+                
+        BoxLayout:
+            id: update_status
+            orientation: "horizontal"
+            size_hint_y: None
+            height: 30
+            Label:
+                text: "Paid Amount:"
+                size_hint_x: 0.15
+                color:(0.06, 0.45, 0.45, 1)
+            TextInput:
+                id: paid_amount
+                hint_text: "Amount(BDT)"
+                multiline: False
+                size_hint_x: 0.15
+                on_text_validate: root.update_invoice()
+            Label:
+                text: "Delivery Status:"
+                size_hint_x: 0.15
+                color:(0.06, 0.45, 0.45, 1)
+            Spinner:
+                id: del_status
+                multiline: False
+                size_hint_x: 0.15
+                font_size: 12
+                values: ['TRUE', 'FALSE']
+            Button:
+                id: update_invoice
+                text: "Update"
+                on_release: root.update_invoice()
+                size_hint_x: 0.1
+                background_normal: ''
+                background_color: (0.06,0.32,0.32, 1)
+            Button:
+                id: print_invoice
+                text: "Print"
+                size_hint_x: 0.1
+                on_release: root.gen_pdf()
+                background_normal: ''
+                background_color: (0.06,0.32,0.32, 1)
+
+    BoxLayout:
+        id: invoices_footer
+        size_hint_y: None
+        height: 30
+        canvas.before:
+            Color:
+                rgba: (0.06,0.47,0.47, 1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        Label:
+            text: "Maintained by Arif"

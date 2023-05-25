@@ -1,0 +1,311 @@
+<SuccessPopup>:
+    id: success_popup
+    size_hint: 0.3, 0.2
+    auto_dismiss: False
+    title: 'Data Recorded Successfully!'
+    Button:
+        text: "OK"
+        size_hint_y: None
+        height: 30
+        size_hint_x: 0.08
+        on_press: success_popup.dismiss()
+        background_normal: ''
+        background_color: (0.06,0.4,0.4, 1)
+<DeleteSuccessPopup>:
+    id: delete_success_popup
+    size_hint: 0.3, 0.2
+    auto_dismiss: False
+    title: 'Data Removed Successfully!'
+    Button:
+        text: "OK"
+        size_hint_y: None
+        height: 30
+        size_hint_x: 0.08
+        on_press: delete_success_popup.dismiss()
+        background_normal: ''
+        background_color: (0.06,0.4,0.4, 1)
+<AdminWindow>:
+    id: main_window
+    orientation: "vertical"
+    canvas.before:
+        Color:
+            rgba: (1,1,1, 1)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    BoxLayout:
+        id: header
+        size_hint_y: None
+        height: 40
+        canvas.before:
+            Color:
+                rgba: (0.06,0.45,0.15, 1)
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        Label:
+            text: "TTI POS"
+            size_hint_x: 0.9
+            bold: True
+            color: (1,1,1, 1)
+        Label:
+            id: loggedin_user
+            text: "AnonymousUser"
+            color: (1,1,1, 1)
+    BoxLayout:
+        id: invoices_menu
+        size_hint_y: None
+        height: 30
+        canvas.before:
+            Color:
+                rgba: (1,1,1, 1)
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        Button:
+            text: "Create Invoice+"
+            background_normal: ''
+            background_color: (0.06,0.32,0.32, 1)
+            on_release: root.create_invoice()
+            size_hint_x: 0.33
+        Button:
+            text: "Invoices"
+            background_normal: ''
+            on_release: root.invoices_window()
+            background_color: (0.06,0.32,0.32, 1)
+            size_hint_x: 0.33
+        Button:
+            text: 'Admin'
+            on_release: root.admin()
+            background_normal: ''
+            background_color: (0.06,0.32,0.32, 1)
+            size_hint_x: 0.33
+    BoxLayout:
+        id: staffs
+        padding: 10
+        orientation: "vertical"
+        BoxLayout:
+            id: staff_labels
+            size_hint_y: None
+            height: 40
+            canvas.before:
+                Color:
+                    rgba: (0.06,0.45,0.45, 1)
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+            Label:
+                text: "Staff ID"
+                size_hint_x: 0.08
+            Label:
+                text: "Staff Name"
+                size_hint_x: 0.08
+            Label:
+                text: "Staff Username"
+                size_hint_x: 0.08
+            Label:
+                text: "Is Staff"
+                size_hint_x: 0.08
+            Label:
+                text: "Is Admin"
+                size_hint_x: 0.08
+            Label:
+                text: "Password"
+                size_hint_x: 0.08
+            Label:
+                text: ""
+                size_hint_x: 0.04
+        ScrollView:
+            StackLayout:
+                size_hint: 1, None
+                width: self.minimum_width
+                height: 1000
+                GridLayout:
+                    id: staff_list
+                    cols: 1
+        BoxLayout:
+            id: staff_update
+            orientation: "horizontal"
+            size_hint_y: None
+            height: 30
+            TextInput:
+                id: staff_id
+                size_hint_x: 0.06
+                hint_text: "Staff ID"
+                multiline: False
+                focus: True
+                on_text_validate: staff_name.focus = True
+            TextInput:
+                id: staff_name
+                size_hint_x: 0.08
+                hint_text: "Name"
+                multiline: False
+                focus: True
+                on_text_validate: staff_username.focus = True
+            TextInput:
+                id: staff_username
+                size_hint_x: 0.08
+                hint_text: "Username"
+                multiline: False
+                focus: True
+                on_text_validate: is_staff.focus = True
+            Spinner:
+                id: is_staff
+                size_hint_x: 0.08
+                text: "Is Staff?"
+                values: ['TRUE', 'FALSE']
+            Spinner:
+                id: is_admin
+                size_hint_x: 0.08
+                text: "Is Admin?"
+                values: ['TRUE', 'FALSE']
+            TextInput:
+                id: password
+                size_hint_x: 0.08
+                hint_text: "Password"
+                multiline: False
+                on_text_validate: root.add_staff()
+            Button:
+                text: 'Add Staff'
+                on_release: root.add_staff()
+                background_normal: ''
+                background_color: (0.06,0.32,0.32, 1)
+                size_hint_x: 0.06
+            Button:
+                text: 'Update'
+                on_release: root.update_staff()
+                background_normal: ''
+                background_color: (0.06,0.32,0.32, 1)
+                size_hint_x: 0.06
+            Button:
+                text: 'Remove'
+                on_release: root.remove_staff()
+                background_normal: ''
+                background_color: (219.0/255.0, 0/255.0, 11.0/255.0, 1)
+                size_hint_x: 0.06
+
+    BoxLayout:
+        id: products
+        padding: 10
+        orientation: "vertical"
+        BoxLayout:
+            id: product_labels
+            size_hint_y: None
+            height: 40
+            canvas.before:
+                Color:
+                    rgba: (0.06,0.45,0.45, 1)
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+            Label:
+                text: "Product ID"
+                size_hint_x: 0.04
+            Label:
+                text: "Model"
+                size_hint_x: 0.04
+            Label:
+                text: "Dimension"
+                size_hint_x: 0.12
+            Label:
+                text: "Price"
+                size_hint_x: 0.04
+            Label:
+                text: "Stock"
+                size_hint_x: 0.04
+            Label:
+                text: "Added By"
+                size_hint_x: 0.08
+            Label:
+                text: "Added on"
+                size_hint_x: 0.06
+            Label:
+                text: ""
+                size_hint_x: 0.04
+        ScrollView:
+            StackLayout:
+                size_hint: 1, None
+                width: self.minimum_width
+                height: 1000
+                GridLayout:
+                    id: product_list
+                    cols: 1
+        BoxLayout:
+            id: product_insert
+            orientation: "horizontal"
+            size_hint_y: None
+            height: 30
+            TextInput:
+                id: product_id
+                size_hint_x: 0.04
+                hint_text: "Product ID"
+            TextInput:
+                id: product_name
+                size_hint_x: 0.04
+                hint_text: "Product name or Model"
+            TextInput:
+                id: product_size
+                size_hint_x: 0.1
+                hint_text: "Dimension"
+            TextInput:
+                id: product_price
+                size_hint_x: 0.04
+                hint_text: "Price"
+            TextInput:
+                id: product_stock
+                size_hint_x: 0.04
+                hint_text: "Stock"
+            Button:
+                text: 'Add'
+                on_release: root.add_product()
+                background_normal: ''
+                background_color: (0.06,0.32,0.32, 1)
+                size_hint_x: 0.04
+            Button:
+                text: 'Update'
+                on_release: root.update_product()
+                background_normal: ''
+                background_color: (0.06,0.32,0.32, 1)
+                size_hint_x: 0.04
+            Button:
+                text: 'Remove'
+                on_release: root.remove_product()
+                background_normal: ''
+                background_color: (219.0/255.0, 0/255.0, 11.0/255.0, 1)
+                size_hint_x: 0.04
+    BoxLayout:
+        id: generate_report
+        padding: 10
+        orientation: "horizontal"
+        size_hint_y: None
+        height: 30
+        Button:
+            text: 'Generate STAFF Roster'
+            on_release: root.generate_roster()
+            background_normal: ''
+            background_color: (0.06,0.45,0.15, 1)
+            size_hint_x: 0.04
+        Button:
+            text: 'Generate Product List'
+            on_release: root.generate_product_sheet()
+            background_normal: ''
+            background_color: (0.06,0.45,0.15, 1)
+            size_hint_x: 0.04
+        Button:
+            text: 'Generate Sales Report'
+            on_release: root.generate_sales_report()
+            background_normal: ''
+            background_color: (0.06,0.45,0.15, 1)
+            size_hint_x: 0.04
+    BoxLayout:
+        id: footer
+        size_hint_y: None
+        height: 30
+        canvas.before:
+            Color:
+                rgba: (0.06,0.47,0.47, 1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        Label:
+            text: "Maintained by Arif"
